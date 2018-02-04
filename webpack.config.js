@@ -23,7 +23,7 @@ module.exports = {
     }]
   },
   plugins: [new HtmlWebpackPlugin({
-    title: 'MCBBS Markdown To BBCode Converter',
+    template: './src/index.html',
     minify: {collapseWhitespace: true}
   }), new DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify('production')

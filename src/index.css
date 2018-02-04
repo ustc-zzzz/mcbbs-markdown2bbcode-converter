@@ -1,14 +1,14 @@
 html, body {
+    overflow-x: hidden;
     height: 100%;
+    width: 100%;
     margin: 0;
 }
 
 .main-left {
     position: absolute;
     top: 96px;
-    left: 32px;
     bottom: 96px;
-    width: calc(50% - 50px);
     padding: 4px 16px;
     overflow-y: auto;
     word-spacing: 0px;
@@ -17,10 +17,42 @@ html, body {
 .main-right {
     position: absolute;
     top: 96px;
-    right: 32px;
     bottom: 96px;
-    width: calc(50% - 50px);
     padding: 0 16px;
     overflow-y: auto;
     word-spacing: 0px;
+}
+
+@media (min-width: 768px) {
+    .main-left {
+        left: 32px;
+        width: calc(50% - 50px);
+    }
+
+    .main-right {
+        right: 32px;
+        width: calc(50% - 50px);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-left {
+        left: 32px;
+        width: calc(100% - 98px);
+    }
+
+    .main-right {
+        right: calc(-100% + 128px);
+        width: calc(100% - 98px);
+    }
+
+    .main-left.show-output {
+        left: calc(-100% + 128px);
+        width: calc(100% - 98px);
+    }
+
+    .main-right.show-output {
+        right: 32px;
+        width: calc(100% - 98px);
+    }
 }

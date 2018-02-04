@@ -26,6 +26,16 @@ class Main extends React.Component {
     localStorage.markdownInput = text
   }
 
+  handleChangeToOutput = () => {
+    document.getElementsByClassName('main-left')[0].classList.add('show-output')
+    document.getElementsByClassName('main-right')[0].classList.add('show-output')
+  }
+
+  handleChangeToInput = () => {
+    document.getElementsByClassName('main-left')[0].classList.remove('show-output')
+    document.getElementsByClassName('main-right')[0].classList.remove('show-output')
+  }
+
   render () {
     return (
       <MuiThemeProvider>
@@ -33,6 +43,7 @@ class Main extends React.Component {
           <Paper
             className='main-left'
             zDepth={this.state.leftDepth}
+            onClick={this.handleChangeToInput}
             onMouseOut={() => this.setState({leftDepth: 1})}
             onMouseOver={() => this.setState({leftDepth: 2})}>
             <InputArea defaultValue={this.state.input} onChange={this.handleChange} />
@@ -40,6 +51,7 @@ class Main extends React.Component {
           <Paper
             className='main-right'
             zDepth={this.state.rightDepth}
+            onClick={this.handleChangeToOutput}
             onMouseOut={() => this.setState({rightDepth: 1})}
             onMouseOver={() => this.setState({rightDepth: 2})}>
             <OutputArea value={this.handleTransform(this.state.input)} />

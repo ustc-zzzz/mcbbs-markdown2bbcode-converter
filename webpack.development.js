@@ -21,7 +21,6 @@ module.exports = {
     }]
   },
   plugins: [new HtmlWebpackPlugin({
-    title: 'MCBBS Markdown To BBCode Converter',
-    minify: {collapseWhitespace: true}
+    template: './src/index.html'
   })]
 }
