@@ -1,0 +1,26 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.main-left {
+    position: absolute;
+    top: 96px;
+    left: 32px;
+    bottom: 96px;
+    width: calc(50% - 50px);
+    padding: 4px 16px;
+    overflow-y: auto;
+    word-spacing: 0px;
+}
+
+.main-right {
+    position: absolute;
+    top: 96px;
+    right: 32px;
+    bottom: 96px;
+    width: calc(50% - 50px);
+    padding: 0 16px;
+    overflow-y: auto;
+    word-spacing: 0px;
+}

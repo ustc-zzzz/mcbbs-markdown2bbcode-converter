@@ -1,0 +1,30 @@
+{
+  "name": "mcbbs-markdown2bbcode-converter",
+  "author": "ustc-zzzz",
+  "version": "0.1.0",
+  "main": "index.js",
+  "dependencies": {
+    "marked": "^0.3.12",
+    "material-ui": "^0.20.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.9",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.20.1",
+    "uglifyjs-webpack-plugin": "^1.1.8",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "scripts": {
+    "build": "webpack --progress --colors --verbose",
+    "start-production": "webpack-dev-server --colors --progress --hot",
+    "start": "webpack-dev-server --colors --progress --hot --config webpack.development.js"
+  }
+}

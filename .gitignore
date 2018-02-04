@@ -1,0 +1,21 @@
+# Whitelist Mode
+/*
+
+# Git File
+!.gitignore
+
+# Travis File
+!.travis.yml
+
+# GitHub Files
+!README.md
+!LICENSE
+
+# Source Code Files
+!src/
+
+# Webpack & NPM Files
+!package.json
+!webpack.config.js
+!webpack.development.js
+
