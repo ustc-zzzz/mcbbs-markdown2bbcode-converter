@@ -32,6 +32,7 @@ class Main extends React.Component {
   }
 
   handleChangeToInput = () => {
+    document.getElementById('markdown-input').focus()
     document.getElementsByClassName('main-left')[0].classList.remove('show-output')
     document.getElementsByClassName('main-right')[0].classList.remove('show-output')
   }
@@ -46,7 +47,7 @@ class Main extends React.Component {
             onClick={this.handleChangeToInput}
             onMouseOut={() => this.setState({leftDepth: 1})}
             onMouseOver={() => this.setState({leftDepth: 2})}>
-            <InputArea defaultValue={this.state.input} onChange={this.handleChange} />
+            <InputArea inputId='markdown-input' defaultValue={this.state.input} onChange={this.handleChange} />
           </Paper>
           <Paper
             className='main-right'
@@ -75,6 +76,7 @@ class InputArea extends React.Component {
         fullWidth={true}
         multiLine={true}
         underlineShow={false}
+        id={this.props.inputId}
         hintText='Markdown Input'
         onChange={this.handleChange}
         value={this.props.defaultValue}
