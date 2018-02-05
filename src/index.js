@@ -45,6 +45,28 @@ function setRenderer () {
   }
 }
 
+function collectConfig () {
+  let rendererConfigResult = {}
+  let rendererConfigFromLocalStorage = (() => {
+    try {
+      return JSON.parse(localStorage.rendererConfig)
+    } catch (e) {
+      return {}
+    }
+  })()
+  for (let key in rendererConfig) {
+    let {prefix, suffix} = rendererConfig[key]
+    suffix = rendererConfigFromLocalStorage[key] || suffix
+    rendererConfigResult[key] = {
+      prefix: prefix,
+      suffix: suffix
+    }
+    rendererConfigFromLocalStorage[key] = suffix
+  }
+  localStorage.rendererConfig = JSON.stringify(rendererConfigFromLocalStorage)
+  return {renderer: rendererConfigResult}
+}
+
 setRenderer()
 
 function onTransform (markdownText) {
@@ -54,5 +76,5 @@ function onTransform (markdownText) {
   }))
 }
 
-ReactDOM.render(<Header/>, document.getElementsByTagName('header')[0])
+ReactDOM.render(<Header configCollector={collectConfig} />, document.getElementsByTagName('header')[0])
 ReactDOM.render(<Main transformer={onTransform} />, document.getElementsByTagName('main')[0])

@@ -1,13 +1,19 @@
 html, body {
-    overflow-x: hidden;
     height: 100%;
     width: 100%;
     margin: 0;
 }
 
+main {
+    overflow-x: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
 .main-left {
     position: absolute;
-    top: 96px;
+    top: 32px;
     bottom: 96px;
     padding: 4px 16px;
     overflow-y: auto;
@@ -16,7 +22,7 @@ html, body {
 
 .main-right {
     position: absolute;
-    top: 96px;
+    top: 32px;
     bottom: 96px;
     padding: 0 16px;
     overflow-y: auto;
