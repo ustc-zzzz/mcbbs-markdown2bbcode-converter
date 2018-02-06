@@ -19,18 +19,18 @@ const muiTheme = getMuiTheme({
 const renderer = new Marked.Renderer()
 
 const rendererConfig = {
-  markdown: {prefix: '(markdown) => ', suffix: "${markdown.split('[br]').join(' ')}"},
-  code: {prefix: '(code, language) => ', suffix: '[code]${code}[/code]'},
+  markdown: {prefix: '(markdown) => ', suffix: "${(s=>{let e=document.createElement('textarea');e.innerHTML=s;return e.value})(markdown.split('[br]').join(' '))}"},
+  code: {prefix: '(code, language) => ', suffix: '[code]${code}[/code]\\n'},
   blockquote: {prefix: '(quote) => ', suffix: "[quote]${quote.split('[br]').join('\\n')}[/quote]"},
-  html: {prefix: '(html) => ', suffix: '${html}'},
+  html: {prefix: '(html) => ', suffix: "${((d,s)=>d.createElement('span').appendChild(d.createTextNode(s)).parentNode.innerHTML)(document,html)}"},
   heading: {prefix: '(text, level) => ', suffix: '[size=${7-level}][b]${text}[/b][/size]\\n\\n'},
   hr: {prefix: '() => ', suffix: '[hr]\\n'},
   list: {prefix: '(body, ordered) => ', suffix: "[list${ordered?'=1':''}]\\n${body}[/list]\\n"},
-  listitem: {prefix: '(text) => ', suffix: '[*]${text}\\n'},
+  listitem: {prefix: '(text) => ', suffix: "[*]${text.endsWith('\\n')?text:text+'\\n'}"},
   paragraph: {prefix: '(text) => ', suffix: "[size=3]${text.split('\\n').join('[br]').split('[br][br]').join('\\n')}[/size]\\n\\n"},
-  table: {prefix: '(header, body) => ', suffix: '[align=center][table=98%]${header}\\n${body}[/table][/align]'},
-  tablerow: {prefix: '(content) => ', suffix: '[tr]${content}[/tr]'},
-  tablecell: {prefix: '(content, header, align) => ', suffix: '[td]${content}[/td]'},
+  table: {prefix: '(header, body) => ', suffix: '[align=center][table=98%]${header}${body}[/table][/align]\\n'},
+  tablerow: {prefix: '(content) => ', suffix: '[tr]${content}[/tr]\\n'},
+  tablecell: {prefix: '(content, header, align) => ', suffix: "[td]${header?'[b]'+content+'[/b]':content}[/td]"},
   strong: {prefix: '(text) => ', suffix: '[b]${text}[/b]'},
   em: {prefix: '(text) => ', suffix: '[i]${text}[/i]'},
   codespan: {prefix: '(code) => ', suffix: '[font=Consolas]${code}[/font]'},
@@ -54,6 +54,7 @@ function setRenderer () {
 }
 
 function collectConfig () {
+  /*
   let rendererConfigResult = {}
   let rendererConfigFromLocalStorage = (() => {
     try {
@@ -73,6 +74,9 @@ function collectConfig () {
   }
   localStorage.rendererConfig = JSON.stringify(rendererConfigFromLocalStorage)
   return {renderer: rendererConfigResult}
+  */
+  localStorage.removeItem('renderConfig')
+  return {renderer: Object.assign({}, rendererConfig)}
 }
 
 setRenderer()
