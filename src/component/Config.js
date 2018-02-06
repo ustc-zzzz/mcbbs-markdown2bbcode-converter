@@ -6,7 +6,6 @@ import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 import { GridList, GridTile } from 'material-ui/GridList'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 const ConfigMenu = props => (
   <IconMenu
@@ -145,7 +144,7 @@ class Config extends React.Component {
     return (
       <div>
         <ConfigMenu
-          iconButtonElement={<IconButton><MoreVertIcon color='rgb(255, 255, 255)' /></IconButton>}
+          iconButtonElement={this.props.children}
           onRenderConfigClick={() => this.setState({renderConfigOpen: true})}
           onAboutClick={() => this.setState({aboutConfigOpen: true})} />
         <Dialog

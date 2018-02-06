@@ -5,8 +5,16 @@ import './index.css'
 import './font/font.css'
 import Main from './component/Main'
 import Header from './component/Header'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { green700, grey600 } from 'material-ui/styles/colors'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import Marked from 'marked'
+
+const muiTheme = getMuiTheme({
+  palette: {primary1Color: green700, primary2Color: green700, primary3Color: grey600},
+  appBar: {height: 64}
+})
 
 const renderer = new Marked.Renderer()
 
@@ -76,5 +84,21 @@ function onTransform (markdownText) {
   }))
 }
 
-ReactDOM.render(<Header configCollector={collectConfig} />, document.getElementsByTagName('header')[0])
-ReactDOM.render(<Main transformer={onTransform} />, document.getElementsByTagName('main')[0])
+function header () {
+  return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <Header configCollector={collectConfig} />
+    </MuiThemeProvider>
+  )
+}
+
+function main () {
+  return (
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <Main transformer={onTransform} />
+    </MuiThemeProvider>
+  )
+}
+
+ReactDOM.render(header(), document.getElementsByTagName('header')[0])
+ReactDOM.render(main(), document.getElementsByTagName('main')[0])

@@ -1,7 +1,6 @@
 import React from 'react'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class Main extends React.Component {
   constructor (props) {
@@ -39,26 +38,24 @@ class Main extends React.Component {
 
   render () {
     return (
-      <MuiThemeProvider>
-        <div>
-          <Paper
-            className='main-left'
-            zDepth={this.state.leftDepth}
-            onClick={this.handleChangeToInput}
-            onMouseOut={() => this.setState({leftDepth: 1})}
-            onMouseOver={() => this.setState({leftDepth: 2})}>
-            <InputArea inputId='markdown-input' defaultValue={this.state.input} onChange={this.handleChange} />
-          </Paper>
-          <Paper
-            className='main-right'
-            zDepth={this.state.rightDepth}
-            onClick={this.handleChangeToOutput}
-            onMouseOut={() => this.setState({rightDepth: 1})}
-            onMouseOver={() => this.setState({rightDepth: 2})}>
-            <OutputArea value={this.handleTransform(this.state.input)} />
-          </Paper>
-        </div>
-      </MuiThemeProvider>
+      <div>
+        <Paper
+          className='main-left'
+          zDepth={this.state.leftDepth}
+          onClick={this.handleChangeToInput}
+          onMouseOut={() => this.setState({leftDepth: 1})}
+          onMouseOver={() => this.setState({leftDepth: 2})}>
+          <InputArea inputId='markdown-input' defaultValue={this.state.input} onChange={this.handleChange} />
+        </Paper>
+        <Paper
+          className='main-right'
+          zDepth={this.state.rightDepth}
+          onClick={this.handleChangeToOutput}
+          onMouseOut={() => this.setState({rightDepth: 1})}
+          onMouseOver={() => this.setState({rightDepth: 2})}>
+          <OutputArea value={this.handleTransform(this.state.input)} />
+        </Paper>
+      </div>
     )
   }
 }

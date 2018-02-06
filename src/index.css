@@ -4,6 +4,10 @@ html, body {
     margin: 0;
 }
 
+pre {
+    font-family: Consolas, "Courier New", Courier, monospace;
+}
+
 main {
     overflow-x: hidden;
     position: fixed;
