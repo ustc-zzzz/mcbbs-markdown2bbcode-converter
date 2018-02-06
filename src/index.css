@@ -13,8 +13,8 @@ main {
 
 .main-left {
     position: absolute;
-    top: 32px;
-    bottom: 96px;
+    top: 16px;
+    bottom: 80px;
     padding: 4px 16px;
     overflow-y: auto;
     word-spacing: 0px;
@@ -22,8 +22,8 @@ main {
 
 .main-right {
     position: absolute;
-    top: 32px;
-    bottom: 96px;
+    top: 16px;
+    bottom: 80px;
     padding: 0 16px;
     overflow-y: auto;
     word-spacing: 0px;
@@ -31,34 +31,34 @@ main {
 
 @media (min-width: 768px) {
     .main-left {
-        left: 32px;
-        width: calc(50% - 50px);
+        left: 16px;
+        width: calc(50% - 26px);
     }
 
     .main-right {
-        right: 32px;
-        width: calc(50% - 50px);
+        right: 16px;
+        width: calc(50% - 26px);
     }
 }
 
 @media (max-width: 768px) {
     .main-left {
-        left: 32px;
-        width: calc(100% - 98px);
+        left: 16px;
+        width: calc(100% - 90px);
     }
 
     .main-right {
-        right: calc(-100% + 128px);
-        width: calc(100% - 98px);
+        right: calc(-100% + 144px);
+        width: calc(100% - 90px);
     }
 
     .main-left.show-output {
-        left: calc(-100% + 128px);
-        width: calc(100% - 98px);
+        left: calc(-100% + 144px);
+        width: calc(100% - 90px);
     }
 
     .main-right.show-output {
-        right: 32px;
-        width: calc(100% - 98px);
+        right: 16px;
+        width: calc(100% - 90px);
     }
 }
