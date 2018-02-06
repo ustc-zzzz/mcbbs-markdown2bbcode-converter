@@ -18,11 +18,23 @@ class Header extends React.Component {
       </Config>
     )
 
+    const title = (
+      <div className='title'>
+        <div>
+          <span className='title-prefix'>MM2BC</span>
+          <span className='title-suffix-big'>&nbsp;-&nbsp;MCBBS Markdown To BBCode Converter</span>
+        </div>
+        <div style={{paddingLeft: '1px'}}>
+          <span className='title-suffix-small'>MCBBS Markdown To BBCode Converter</span>
+        </div>
+      </div>
+    )
+
     return (
       <AppBar
+        title={title}
         showMenuIconButton={false}
-        iconElementRight={configIcon}
-        title='MCBBS Markdown To BBCode Converter' />
+        iconElementRight={configIcon} />
     )
   }
 }

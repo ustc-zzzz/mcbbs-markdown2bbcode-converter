@@ -17,8 +17,8 @@ main {
 
 .main-left {
     position: absolute;
-    top: 16px;
-    bottom: 80px;
+    top: 24px;
+    bottom: 88px;
     padding: 4px 16px;
     overflow-y: auto;
     word-spacing: 0px;
@@ -26,43 +26,60 @@ main {
 
 .main-right {
     position: absolute;
-    top: 16px;
-    bottom: 80px;
+    top: 24px;
+    bottom: 88px;
     padding: 0 16px;
     overflow-y: auto;
     word-spacing: 0px;
 }
 
 @media (min-width: 768px) {
+    .title-suffix-small {
+        display: none;
+    }
+
     .main-left {
-        left: 16px;
-        width: calc(50% - 26px);
+        left: 24px;
+        width: calc(50% - 38px);
     }
 
     .main-right {
-        right: 16px;
-        width: calc(50% - 26px);
+        right: 24px;
+        width: calc(50% - 38px);
     }
 }
 
 @media (max-width: 768px) {
+    .title-suffix-small {
+        font-size: 12px;
+    }
+    
+    .title-suffix-big {
+        display: none;
+    }
+
+    .title {
+        line-height: 20px;
+        padding-top: 12px;
+    }
+
     .main-left {
-        left: 16px;
-        width: calc(100% - 90px);
+        left: 24px;
+        width: calc(100% - 80px);
     }
 
     .main-right {
-        right: calc(-100% + 144px);
-        width: calc(100% - 90px);
+        right: calc(-100% + 108px);
+        width: calc(100% - 80px);
     }
 
     .main-left.show-output {
-        left: calc(-100% + 144px);
-        width: calc(100% - 90px);
+        left: calc(-100% + 108px);
+        width: calc(100% - 80px);
     }
 
     .main-right.show-output {
-        right: 16px;
-        width: calc(100% - 90px);
+        right: 24px;
+        width: calc(100% - 80px);
     }
 }
