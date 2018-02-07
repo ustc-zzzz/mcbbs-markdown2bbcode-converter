@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom'
 
 import './index.css'
 import './font/font.css'
+import RendererConfig from './config/Renderer.json'
+
+import Marked from 'marked'
 import Main from './component/Main'
 import Header from './component/Header'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { green700, grey600 } from 'material-ui/styles/colors'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
-import Marked from 'marked'
 
 const muiTheme = getMuiTheme({
   palette: {primary1Color: green700, primary2Color: green700, primary3Color: grey600},
@@ -18,32 +19,11 @@ const muiTheme = getMuiTheme({
 
 const renderer = new Marked.Renderer()
 
-const rendererConfig = {
-  markdown: {prefix: '(markdown) => ', suffix: "${(s=>{let e=document.createElement('textarea');e.innerHTML=s;return e.value})(markdown.split('[br]').join(' '))}"},
-  code: {prefix: '(code, language) => ', suffix: '[code]${code}[/code]\\n'},
-  blockquote: {prefix: '(quote) => ', suffix: "[quote]${quote.split('[br]').join('\\n')}[/quote]"},
-  html: {prefix: '(html) => ', suffix: "${((d,s)=>d.createElement('span').appendChild(d.createTextNode(s)).parentNode.innerHTML)(document,html)}"},
-  heading: {prefix: '(text, level) => ', suffix: '[size=${7-level}][b]${text}[/b][/size]\\n\\n'},
-  hr: {prefix: '() => ', suffix: '[hr]\\n'},
-  list: {prefix: '(body, ordered) => ', suffix: "[list${ordered?'=1':''}]\\n${body}[/list]\\n"},
-  listitem: {prefix: '(text) => ', suffix: "[*]${text.endsWith('\\n')?text:text+'\\n'}"},
-  paragraph: {prefix: '(text) => ', suffix: "[size=3]${text.split('\\n').join('[br]').split('[br][br]').join('\\n')}[/size]\\n\\n"},
-  table: {prefix: '(header, body) => ', suffix: '[align=center][table=98%]${header}${body}[/table][/align]\\n'},
-  tablerow: {prefix: '(content) => ', suffix: '[tr]${content}[/tr]\\n'},
-  tablecell: {prefix: '(content, header, align) => ', suffix: "[td]${header?'[b]'+content+'[/b]':content}[/td]"},
-  strong: {prefix: '(text) => ', suffix: '[b]${text}[/b]'},
-  em: {prefix: '(text) => ', suffix: '[i]${text}[/i]'},
-  codespan: {prefix: '(code) => ', suffix: '[font=Consolas]${code}[/font]'},
-  br: {prefix: '() => ', suffix: '[br][br]'},
-  del: {prefix: '(text) => ', suffix: '[s]${text}[/s]'},
-  link: {prefix: '(href, title, text) => ', suffix: '[url=${href}]${text}[/url]'},
-  image: {prefix: '(href, title, text) => ', suffix: '[img]${href}[/img]'},
-  text: {prefix: '(text) => ', suffix: '${text}'}
-}
-
-function setRenderer () {
-  for (let key in rendererConfig) {
-    let {prefix, suffix} = rendererConfig[key]
+function setRenderer (preset) {
+  preset = preset || 'default'
+  for (let key in RendererConfig.prefix) {
+    let prefix = RendererConfig.prefix[key]
+    let suffix = RendererConfig['suffix_' + preset][key]
     let func = eval(prefix + '`' + suffix + '`')
     if (key === 'tablecell') {
       renderer[key] = (content, flags) => func(content, flags.header, flags.align)
@@ -53,30 +33,16 @@ function setRenderer () {
   }
 }
 
-function collectConfig () {
-  /*
-  let rendererConfigResult = {}
-  let rendererConfigFromLocalStorage = (() => {
-    try {
-      return JSON.parse(localStorage.rendererConfig)
-    } catch (e) {
-      return {}
-    }
-  })()
-  for (let key in rendererConfig) {
-    let {prefix, suffix} = rendererConfig[key]
-    suffix = rendererConfigFromLocalStorage[key] || suffix
-    rendererConfigResult[key] = {
-      prefix: prefix,
-      suffix: suffix
-    }
-    rendererConfigFromLocalStorage[key] = suffix
+function collectConfig (preset) {
+  let result = {}
+  preset = preset || 'default'
+  for (let key in RendererConfig.prefix) {
+    let prefix = RendererConfig.prefix[key]
+    let suffix = RendererConfig['suffix_' + preset][key]
+    result[key] = {prefix: prefix, suffix: suffix}
   }
-  localStorage.rendererConfig = JSON.stringify(rendererConfigFromLocalStorage)
-  return {renderer: rendererConfigResult}
-  */
   localStorage.removeItem('renderConfig')
-  return {renderer: Object.assign({}, rendererConfig)}
+  return {renderer: result}
 }
 
 setRenderer()
