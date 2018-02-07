@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import './font/font.css'
 import RendererConfig from './config/Renderer.json'
+import ImageCollection from './config/ImageCollection.json'
 
 import Marked from 'marked'
 import Main from './component/Main'
@@ -57,7 +58,7 @@ function onTransform (markdownText) {
 function header () {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Header configCollector={collectConfig} />
+      <Header configCollector={collectConfig} images={ImageCollection} />
     </MuiThemeProvider>
   )
 }

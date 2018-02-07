@@ -49,7 +49,7 @@ const ByMaterialUI = props => (
 )
 
 const HunluanImg = props => (
-  <img height='120px' src='http://www.mcbbs.net/uc_server/avatar.php?uid=3038&size=middle' />
+  <img height='120px' src={props.images['Hunluan']} />
 )
 
 const Hunluan = props => (
@@ -57,7 +57,7 @@ const Hunluan = props => (
 )
 
 const Rom718Img = props => (
-  <img height='120px' src='http://www.mcbbs.net/uc_server/avatar.php?uid=265600&size=middle' />
+  <img height='120px' src={props.images['Rom718']} />
 )
 
 const Rom718 = props => (
@@ -78,7 +78,7 @@ class Watching extends React.Component {
     if (this.state.showHunluan && this.state.showRom718) {
       return (
         <div>
-          <p><HunluanImg /><Rom718Img /></p>
+          <p><HunluanImg images={this.props.images} /><Rom718Img images={this.props.images} /></p>
           <HunluanAndRom718>Hunluan and Rom718 are watching you!</HunluanAndRom718>
         </div>
       )
@@ -86,7 +86,7 @@ class Watching extends React.Component {
       const onChange = () => this.setState({showHunluan: true, showRom718: true})
       return (
         <div>
-          <p><Rom718Img /></p>
+          <p><Rom718Img images={this.props.images} /></p>
           <Rom718><span onClick={onChange}>Rom718 is watching you!</span></Rom718>
         </div>
       )
@@ -94,7 +94,7 @@ class Watching extends React.Component {
       const onChange = () => this.setState({showHunluan: false, showRom718: true})
       return (
         <div>
-          <p><HunluanImg /></p>
+          <p><HunluanImg images={this.props.images} /></p>
           <Hunluan><span onClick={onChange}>Hunluan is watching you!</span></Hunluan>
         </div>
       )
@@ -175,7 +175,7 @@ class Config extends React.Component {
           <p>
             Powered by <ByReact /> and <ByMaterialUI />.
           </p>
-          <Watching />
+          <Watching images={this.props.images} />
         </Dialog>
       </div>
     )
