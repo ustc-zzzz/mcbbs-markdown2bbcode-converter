@@ -3,12 +3,13 @@ var path = require('path')
 var DefinePlugin = require('webpack').DefinePlugin
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.join(__dirname, './build'),
-    filename: 'index.js'
+    filename: 'index.[hash:8].js'
   },
   module: {
     loaders: [{
@@ -22,7 +23,9 @@ module.exports = {
       loader: 'url-loader?limit=65535'
     }]
   },
-  plugins: [new HtmlWebpackPlugin({
+  plugins: [new CleanWebpackPlugin([
+    'build/index.*.js'
+  ]), new HtmlWebpackPlugin({
     template: './src/index.html',
     minify: {collapseWhitespace: true}
   }), new DefinePlugin({
