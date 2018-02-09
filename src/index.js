@@ -13,6 +13,10 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { green700, grey600 } from 'material-ui/styles/colors'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+const textObject = {
+  text: ''
+}
+
 const muiTheme = getMuiTheme({
   palette: {primary1Color: green700, primary2Color: green700, primary3Color: grey600},
   appBar: {height: 64}
@@ -20,12 +24,15 @@ const muiTheme = getMuiTheme({
 
 const renderer = new Marked.Renderer()
 
+const renderConfig = {}
+
 function setRenderer (preset) {
   preset = preset || 'default'
   for (let key in RendererConfig.prefix) {
     let prefix = RendererConfig.prefix[key]
     let suffix = RendererConfig['suffix_' + preset][key]
     let func = eval(prefix + '`' + suffix + '`')
+    renderConfig[key] = {prefix: prefix, suffix: suffix}
     if (key === 'tablecell') {
       renderer[key] = (content, flags) => func(content, flags.header, flags.align)
     } else {
@@ -35,21 +42,13 @@ function setRenderer (preset) {
 }
 
 function collectConfig (preset) {
-  let result = {}
-  preset = preset || 'default'
-  for (let key in RendererConfig.prefix) {
-    let prefix = RendererConfig.prefix[key]
-    let suffix = RendererConfig['suffix_' + preset][key]
-    result[key] = {prefix: prefix, suffix: suffix}
-  }
-  localStorage.removeItem('renderConfig')
-  return {renderer: result}
+  return {renderer: renderConfig, text: textObject.text}
 }
 
 setRenderer()
 
 function onTransform (markdownText) {
-  return renderer.markdown(Marked(markdownText, {
+  return textObject.text = renderer.markdown(Marked(markdownText, {
     renderer: renderer, breaks: false, gfm: true, tables: true, xhtml: false,
     pedantic: false, sanitize: false, smartLists: true, smartypants: false
   }))

@@ -47,6 +47,10 @@ main {
         right: 24px;
         width: calc(50% - 38px);
     }
+
+    .header-copy-output.show-in-menu {
+        display: none !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -81,5 +85,9 @@ main {
     .main-right.show-output {
         right: 24px;
         width: calc(100% - 80px);
+    }
+
+    .header-copy-output.show-in-app-bar {
+        display: none !important;
     }
 }

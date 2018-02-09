@@ -12,8 +12,9 @@ const ConfigMenu = props => (
     iconButtonElement={props.iconButtonElement}
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-    <MenuItem primaryText="Render Configuration" onClick={props.onRenderConfigClick} />
-    <MenuItem primaryText="About This Project" onClick={props.onAboutClick} />
+    <MenuItem className='header-copy-output show-in-menu' primaryText='Copy Output to Clipboard' />
+    <MenuItem primaryText='Render Configuration' onClick={props.onRenderConfigClick} />
+    <MenuItem primaryText='About This Project' onClick={props.onAboutClick} />
   </IconMenu>
 )
 
@@ -129,20 +130,20 @@ class Config extends React.Component {
 
   render() {
     const renderConfigActions = [
-//    <FlatButton label="Reset" primary={true} onClick={this.handleReset}/>,
+//    <FlatButton label='Reset' primary={true} onClick={this.handleReset}/>,
       <FlatButton
-        label="OK"
+        label='OK'
         primary={true}
         onClick={() => this.setState({renderConfigOpen: false})} />
     ]
     const aboutActions = [
       <FlatButton
-        label="OK"
+        label='OK'
         primary={true}
         onClick={() => this.setState({aboutConfigOpen: false})} />
     ]
     return (
-      <div>
+      <div style={{display: 'inline-block'}}>
         <ConfigMenu
           iconButtonElement={this.props.children}
           onRenderConfigClick={() => this.setState({renderConfigOpen: true})}
@@ -150,7 +151,7 @@ class Config extends React.Component {
         <Dialog
           modal={false}
           autoScrollBodyContent={true}
-          title="Render Configuration"
+          title='Render Configuration'
           actions={renderConfigActions}
           contentStyle={{width: '100%'}}
           open={this.state.renderConfigOpen}
@@ -160,7 +161,7 @@ class Config extends React.Component {
         <Dialog
           modal={false}
           actions={aboutActions}
-          title="About This Project"
+          title='About This Project'
           autoScrollBodyContent={true}
           contentStyle={{width: '100%'}}
           open={this.state.aboutConfigOpen}

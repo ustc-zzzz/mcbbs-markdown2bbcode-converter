@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "dependencies": {
+    "clipboard": "^1.7.1",
     "marked": "^0.3.12",
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
