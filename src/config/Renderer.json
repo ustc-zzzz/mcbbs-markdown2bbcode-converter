@@ -24,7 +24,7 @@
     "suffix_default": {
         "markdown": "${(s=>{let e=document.createElement('textarea');e.innerHTML=s;return e.value})(markdown.split('[br]').join(' '))}",
         "code": "[code]${code}[/code]\\n",
-        "blockquote": "[quote]${quote.split('[br]').join('\\n')}[/quote]",
+        "blockquote": "[quote]${quote.split('[br]').join('\\n').replace(/\\n$/,'')}[/quote]\\n",
         "html": "${((d,s)=>d.createElement('span').appendChild(d.createTextNode(s)).parentNode.innerHTML)(document,html)}",
         "heading": "[size=${7-level}][b]${text}[/b][/size]\\n\\n",
         "hr": "[hr]\\n",
