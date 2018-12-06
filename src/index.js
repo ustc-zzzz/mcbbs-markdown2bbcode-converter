@@ -28,9 +28,20 @@ const renderConfig = {}
 
 function setRenderer (preset) {
   preset = preset || 'default'
-  for (let key in RendererConfig.prefix) {
-    let prefix = RendererConfig.prefix[key]
-    let suffix = RendererConfig['suffix_' + preset][key]
+  let prefixes = RendererConfig.prefix
+  let suffixes = RendererConfig['suffix_' + preset]
+  try {
+    if (localStorage.renderConfigOverride !== 'true') {
+      localStorage.renderConfigOverride = 'false'
+      throw new Error()
+    }
+    Object.assign(suffixes, JSON.parse(localStorage.renderConfig))
+  } catch (e) {
+    localStorage.renderConfig = JSON.stringify(suffixes)
+  }
+  for (let key in prefixes) {
+    let prefix = prefixes[key]
+    let suffix = suffixes[key]
     let func = eval(prefix + '`' + suffix + '`')
     renderConfig[key] = {prefix: prefix, suffix: suffix}
     if (key === 'tablecell') {
