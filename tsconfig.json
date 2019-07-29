@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "module": "commonjs",
+        "sourceMap": true,
+        "target": "es6",
+        "strict": true,
+        "jsx": "react"
+    }
+}

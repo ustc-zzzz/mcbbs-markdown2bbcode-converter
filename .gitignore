@@ -16,6 +16,9 @@
 
 # Webpack & NPM Files
 !package.json
+!package-lock.json
 !webpack.config.js
-!webpack.development.js
+
+# TSConfig File
+!tsconfig.json
 

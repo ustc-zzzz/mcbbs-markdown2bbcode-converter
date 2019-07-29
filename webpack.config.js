@@ -1,36 +1,41 @@
-var path = require('path')
-
-var DefinePlugin = require('webpack').DefinePlugin
+var Path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-var CleanWebpackPlugin = require('clean-webpack-plugin')
+var CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
 
 module.exports = {
-  entry: './src/index.js',
+  mode: 'production',
+  devtool: 'source-map',
+  resolve: {
+    extensions: ['.js', '.ts', '.tsx']
+  },
   output: {
-    path: path.join(__dirname, './build'),
+    path: Path.join(__dirname, './build'),
     filename: 'index.[hash:8].js'
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loader: 'babel-loader?presets[]=react&presets[]=stage-2'
+      enforce: 'pre',
+      loader: 'source-map-loader'
+    }, {
+      test: /\.ts(x?)$/,
+      loader: 'ts-loader',
+      exclude: /node_modules/
     }, {
       test: /\.css$/,
-      loader: 'style-loader!css-loader'
+      loader: 'style-loader!typings-for-css-modules-loader?modules&namedExport&camelCase'
     }, {
       test: /\.woff2$/,
       loader: 'url-loader?limit=65535'
     }]
   },
-  plugins: [new CleanWebpackPlugin([
-    'build/index.*.js'
-  ]), new HtmlWebpackPlugin({
-    template: './src/index.html',
+  performance: {
+    maxAssetSize: 1000000,
+    maxEntrypointSize: 1000000
+  },
+  plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: 'src/index.html',
     minify: {collapseWhitespace: true}
-  }), new DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('production')
-  }), new UglifyJsPlugin({
-    uglifyOptions: {ie8: false, ecma: 6}
   })]
 }
