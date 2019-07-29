@@ -31,15 +31,17 @@ function Main(props: MainProps) {
     localStorage.markdownInput = text
   }
 
-  const handleChangeToOutput = () => {
+  const handleChangeToOutput = (event: React.MouseEvent<{}> | React.TouchEvent<{}>) => {
     const mainLeftStyle = `${Style.mainLeft} ${Style.showOutput}`
     const mainRightStyle = `${Style.mainRight} ${Style.showOutput}`
     setState({ ...state, mainLeftStyle: mainLeftStyle, mainRightStyle: mainRightStyle })
+    event.stopPropagation()
   }
 
-  const handleChangeToInput = () => {
+  const handleChangeToInput = (event: React.MouseEvent<{}> | React.TouchEvent<{}>) => {
     (document.getElementById('markdown-input') as HTMLTextAreaElement).focus()
     setState({ ...state, mainLeftStyle: Style.mainLeft, mainRightStyle: Style.mainRight })
+    event.stopPropagation()
   }
 
   return (
@@ -47,6 +49,7 @@ function Main(props: MainProps) {
       <Paper
         zDepth={state.leftDepth}
         onClick={handleChangeToInput}
+        onTouchEnd={handleChangeToInput}
         className={state.mainLeftStyle}
         onMouseOut={() => setState({ ...state, leftDepth: 1 })}
         onMouseOver={() => setState({ ...state, leftDepth: 2 })}>
@@ -55,6 +58,7 @@ function Main(props: MainProps) {
       <Paper
         zDepth={state.rightDepth}
         onClick={handleChangeToOutput}
+        onTouchEnd={handleChangeToOutput}
         className={state.mainRightStyle}
         onMouseOut={() => setState({ ...state, rightDepth: 1 })}
         onMouseOver={() => setState({ ...state, rightDepth: 2 })}>
