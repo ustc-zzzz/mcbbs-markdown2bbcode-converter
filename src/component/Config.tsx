@@ -171,7 +171,7 @@ function AuthorGitHub(props: {}) {
 }
 
 function AuthorMCBBS(props: {}) {
-  const href = 'http://www.mcbbs.net/home.php?mod=space&uid=1480882'
+  const href = 'https://www.mcbbs.net/?1480882'
   return <AboutLink href={href}>@ustc_zzzz</AboutLink>
 }
 
@@ -190,7 +190,7 @@ function ByReact(props: {}) {
 }
 
 function ByMaterialUI(props: {}) {
-  return <AboutLink href='http://www.material-ui.com/'>Material UI</AboutLink>
+  return <AboutLink href='https://www.material-ui.com/'>Material UI</AboutLink>
 }
 
 function HunluanImg(props: { images: { [key: string]: string } }) {
@@ -198,7 +198,7 @@ function HunluanImg(props: { images: { [key: string]: string } }) {
 }
 
 function Hunluan(props: { children: React.ReactElement<{}> }) {
-  const href = 'http://www.mcbbs.net/home.php?mod=space&uid=3038'
+  const href = 'https://www.mcbbs.net/?3038'
   return <AboutLink href={href}>{props.children}</AboutLink>
 }
 
@@ -207,7 +207,7 @@ function Rom718Img(props: { images: { [key: string]: string } }) {
 }
 
 function Rom718(props: { children: React.ReactElement<{}> }) {
-  const href = 'http://www.mcbbs.net/home.php?mod=space&uid=265600'
+  const href = 'https://www.mcbbs.net/?265600'
   return <AboutLink href={href}>{props.children}</AboutLink>
 }
 
