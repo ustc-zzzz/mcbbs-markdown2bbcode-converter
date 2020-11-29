@@ -27,6 +27,7 @@ pre {
 
 .main-left {
     position: absolute;
+    overflow-y: auto;
     padding: 16px 16px;
     word-spacing: 0;
     width: calc(50% - 70px);
@@ -37,6 +38,7 @@ pre {
 
 .main-right {
     position: absolute;
+    overflow-y: auto;
     padding: 16px 16px;
     word-spacing: 0;
     width: calc(50% - 70px);
