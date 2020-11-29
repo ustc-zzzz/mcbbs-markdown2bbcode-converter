@@ -1,10 +1,11 @@
 import * as React from 'react'
-import * as Clipboard from 'clipboard'
 
 import * as Index from '../index'
 import * as Style from '../index.css'
 
 import * as Core from '@material-ui/core'
+
+import Clipboard from 'clipboard'
 
 import Config from './Config'
 

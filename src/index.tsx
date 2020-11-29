@@ -1,15 +1,15 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
+import * as Styles from '@material-ui/core/styles'
+
+import Marked from 'marked'
+
 import Main from './component/Main'
 import Header from './component/Header'
 
-import * as RendererConfig from './config/Renderer.json'
-import * as ImageCollection from './config/ImageCollection.json'
-
-import * as Marked from 'marked'
-import * as Colors from '@material-ui/core/colors'
-import * as Styles from '@material-ui/core/styles'
+import RendererConfig from './config/Renderer.json'
+import ImageCollection from './config/ImageCollection.json'
 
 export interface RenderConfigCollection {
   [key: string]: {
