@@ -14,12 +14,13 @@
   },
   "homepage": "https://github.com/ustc-zzzz/mcbbs-markdown2bbcode-converter#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.1",
+    "@material-ui/icons": "^4.9.1",
     "@types/clipboard": "^2.0.1",
     "@types/marked": "^0.6.5",
-    "@types/material-ui": "^0.21.7",
     "clipboard": "^2.0.6",
     "marked": "^0.7.0",
-    "material-ui": "^0.20.2",
+    "material-ui-popup-state": "^1.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

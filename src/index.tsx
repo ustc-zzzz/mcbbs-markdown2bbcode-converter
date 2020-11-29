@@ -8,7 +8,8 @@ import * as RendererConfig from './config/Renderer.json'
 import * as ImageCollection from './config/ImageCollection.json'
 
 import * as Marked from 'marked'
-import * as Styles from 'material-ui/styles'
+import * as Colors from '@material-ui/core/colors'
+import * as Styles from '@material-ui/core/styles'
 
 export interface RenderConfigCollection {
   [key: string]: {
@@ -29,14 +30,14 @@ export interface Renderer {
 
 const textObject = { text: '' }
 
-const muiTheme = Styles.getMuiTheme({
+const muiTheme = Styles.createMuiTheme({
   palette: {
-    primary1Color: Styles.colors.green700,
-    primary2Color: Styles.colors.green700,
-    primary3Color: Styles.colors.grey600
-  },
-  appBar: {
-    height: 64
+    primary: {
+      main: '#2e7d32'
+    },
+    secondary: {
+      main: '#2e7d32'
+    }
   }
 })
 
@@ -84,21 +85,13 @@ function onTransform(markdownText: string) {
   }))
 }
 
-function header() {
+function body() {
   return (
-    <Styles.MuiThemeProvider muiTheme={muiTheme}>
+    <Styles.MuiThemeProvider theme={muiTheme}>
       <Header configCollector={collectConfig} images={ImageCollection} />
-    </Styles.MuiThemeProvider>
-  )
-}
-
-function main() {
-  return (
-    <Styles.MuiThemeProvider muiTheme={muiTheme}>
       <Main transformer={onTransform} />
     </Styles.MuiThemeProvider>
   )
 }
 
-ReactDOM.render(header(), document.getElementsByTagName('header')[0])
-ReactDOM.render(main(), document.getElementsByTagName('main')[0])
+ReactDOM.render(body(), document.body)

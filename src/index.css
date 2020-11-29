@@ -1,51 +1,58 @@
 html, body {
+    position: fixed;
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+main {
+    position: absolute;
+    overflow-y: hidden;
+    overflow-x: auto;
+    bottom: 0;
+    top: 64px;
+    right: 0;
+    left: 0;
 }
 
 pre {
     font-family: Consolas, "Courier New", Courier, monospace;
 }
 
-main {
-    overflow-x: hidden;
-    position: fixed;
-    height: 100%;
-    width: 100%;
+.main-container {
+    position: absolute;
+    bottom: 24px;
+    top: 24px;
 }
 
 .main-left {
     position: absolute;
-    top: 24px;
-    bottom: 88px;
-    padding: 4px 16px;
-    overflow-y: auto;
-    word-spacing: 0px;
+    padding: 16px 16px;
+    word-spacing: 0;
+    width: calc(50% - 70px);
+    bottom: 0;
+    top: 0;
+    left: 24px;
 }
 
 .main-right {
     position: absolute;
-    top: 24px;
-    bottom: 88px;
-    padding: 0 16px;
-    overflow-y: auto;
-    word-spacing: 0px;
+    padding: 16px 16px;
+    word-spacing: 0;
+    width: calc(50% - 70px);
+    bottom: 0;
+    top: 0;
+    right: 24px;
 }
 
 @media (min-width: 768px) {
+    .main-container {
+        width: 100%;
+        left: 0;
+    }
+
     .title-suffix-small {
         display: none;
-    }
-
-    .main-left {
-        left: 24px;
-        width: calc(50% - 38px);
-    }
-
-    .main-right {
-        right: 24px;
-        width: calc(50% - 38px);
     }
 
     .header-copy-output.show-in-menu {
@@ -53,38 +60,21 @@ main {
     }
 }
 
-@media (max-width: 768px) {
-    .title-suffix-small {
-        font-size: 12px;
+@media (max-width: 767px) {
+    .main-container {
+        width: calc(200% - 20px);
+        left: 0;
     }
-    
+
+    .title-suffix-small {
+        white-space: nowrap;
+        padding-left: 1px;
+        font-size: 12px;
+        flex-grow: 1;
+    }
+
     .title-suffix-big {
         display: none;
-    }
-
-    .title {
-        line-height: 20px;
-        padding-top: 12px;
-    }
-
-    .main-left {
-        left: 24px;
-        width: calc(100% - 80px);
-    }
-
-    .main-right {
-        right: calc(-100% + 108px);
-        width: calc(100% - 80px);
-    }
-
-    .main-left.show-output {
-        left: calc(-100% + 108px);
-        width: calc(100% - 80px);
-    }
-
-    .main-right.show-output {
-        right: 24px;
-        width: calc(100% - 80px);
     }
 
     .header-copy-output.show-in-app-bar {

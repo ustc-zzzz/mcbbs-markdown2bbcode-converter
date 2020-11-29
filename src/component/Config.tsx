@@ -3,14 +3,12 @@ import * as React from 'react'
 import * as Index from '../index'
 import * as Style from '../index.css'
 
-import Dialog from 'material-ui/Dialog'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
-import IconButton from 'material-ui/IconButton'
-import FlatButton from 'material-ui/FlatButton'
+import * as Core from '@material-ui/core'
+import * as Icons from '@material-ui/icons'
+
+import * as PopupState from 'material-ui-popup-state/hooks'
 
 interface ConfigProps {
-  children: React.ReactElement<IconButton>
   images: {
     [key: string]: string
   }
@@ -21,10 +19,11 @@ interface ConfigProps {
 }
 
 function Config(props: ConfigProps) {
-  const [state, setState] = React.useState({
-    renderConfigOpen: false,
-    aboutConfigOpen: false
-  })
+  const popupState = PopupState.usePopupState({ variant: 'popover', popupId: 'config' })
+
+  const [renderConfigOpen, setRenderConfigOpen] = React.useState(false)
+
+  const [aboutConfigOpen, setAboutConfigOpen] = React.useState(false)
 
   const collectRendererConfig = () => props.configCollector()['renderer']
 
@@ -43,57 +42,43 @@ function Config(props: ConfigProps) {
     return result
   }
 
-  const renderConfigActions = [
-    //  <FlatButton label='Reset' primary={true} onClick={handleReset}/>,
-    <FlatButton
-      label='OK'
-      primary={true}
-      onClick={() => setState({ ...state, renderConfigOpen: false })} />
-  ]
+  const closeRenderConfig = () => setRenderConfigOpen(false)
 
-  const aboutActions = [
-    <FlatButton
-      label='OK'
-      primary={true}
-      onClick={() => setState({ ...state, aboutConfigOpen: false })} />
-  ]
+  const closeAboutConfig = () => setAboutConfigOpen(false)
 
   return (
     <div style={{ display: 'inline-block' }}>
+      <Core.IconButton color='inherit' style={{marginRight: '-12px'}} {...PopupState.bindTrigger(popupState)}>
+        <Icons.MoreVert />
+      </Core.IconButton>
       <ConfigMenu
-        iconButtonElement={props.children}
-        onRenderConfigClick={() => setState({ ...state, renderConfigOpen: true })}
-        onAboutClick={() => setState({ ...state, aboutConfigOpen: true })} />
-      <Dialog
-        modal={false}
-        autoScrollBodyContent={true}
-        title='Render Configuration'
-        actions={renderConfigActions}
-        contentStyle={{ width: '100%' }}
-        open={state.renderConfigOpen}
-        onRequestClose={() => setState({ ...state, renderConfigOpen: false })}>
-        {generateRenderConfigList()}
-      </Dialog>
-      <Dialog
-        modal={false}
-        actions={aboutActions}
-        title='About Project'
-        autoScrollBodyContent={true}
-        contentStyle={{ width: '100%' }}
-        open={state.aboutConfigOpen}
-        onRequestClose={() => setState({ ...state, aboutConfigOpen: false })}>
-        <p>
-          Author:&nbsp;zzzz
-          (Github:&nbsp;<AuthorGitHub />,&nbsp;MCBBS:&nbsp;<AuthorMCBBS />).
-        </p>
-        <p>
-          Source Code on <SourceCodeGitHub />, under <SourceCodeLicense />.
-        </p>
-        <p>
-          Powered by <ByReact /> and <ByMaterialUI />.
-        </p>
-        <Watching images={props.images} />
-      </Dialog>
+        popupState={popupState}
+        onAboutClick={() => setAboutConfigOpen(true)}
+        onRenderConfigClick={() => setRenderConfigOpen(true)} />
+      <Core.Dialog fullWidth={true} scroll='paper' open={renderConfigOpen} onClose={closeRenderConfig} title='Render Configuration'>
+        <Core.DialogContent>{generateRenderConfigList()}</Core.DialogContent>
+        <Core.DialogActions>
+          <Core.Button color='primary' onClick={closeRenderConfig}>OK</Core.Button>
+        </Core.DialogActions>
+      </Core.Dialog>
+      <Core.Dialog scroll='paper' open={aboutConfigOpen} onClose={closeAboutConfig} title='About Project'>
+        <Core.DialogContent>
+          <p>
+            Author:&nbsp;zzzz
+            (Github:&nbsp;<AuthorGitHub />,&nbsp;MCBBS:&nbsp;<AuthorMCBBS />).
+          </p>
+          <p>
+            Source Code on <SourceCodeGitHub />, under <SourceCodeLicense />.
+          </p>
+          <p>
+            Powered by <ByReact /> and <ByMaterialUI />.
+          </p>
+          <Watching images={props.images} />
+        </Core.DialogContent>
+        <Core.DialogActions>
+          <Core.Button color='primary' onClick={closeAboutConfig}>OK</Core.Button>
+        </Core.DialogActions>
+      </Core.Dialog>
     </div>
   )
 }
@@ -139,21 +124,20 @@ function Watching(props: WatchingProps) {
 }
 
 interface ConfigMenuProps {
-  iconButtonElement: React.ReactElement<IconButton>
+  popupState: PopupState.PopupState
   onRenderConfigClick(): void
   onAboutClick(): void
 }
 
 function ConfigMenu(props: ConfigMenuProps) {
   const clipboardButtonClass = `${Style.headerCopyOutput} ${Style.showInMenu}`
-  return <IconMenu
-    iconButtonElement={props.iconButtonElement}
-    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
-    <MenuItem className={clipboardButtonClass} primaryText='Copy Output to Clipboard' />
-    <MenuItem primaryText='Render Configuration' onClick={props.onRenderConfigClick} />
-    <MenuItem primaryText='About Project' onClick={props.onAboutClick} />
-  </IconMenu>
+  return (
+    <Core.Menu {...PopupState.bindMenu(props.popupState)}>
+      <Core.MenuItem className={clipboardButtonClass}>Copy Output to Clipboard</Core.MenuItem>
+      <Core.MenuItem onClick={props.onRenderConfigClick}>Render Configuration</Core.MenuItem>
+      <Core.MenuItem onClick={props.onAboutClick}>About Project</Core.MenuItem>
+    </Core.Menu>
+  )
 }
 
 interface AboutLinkProps {
