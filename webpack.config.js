@@ -22,9 +22,6 @@ module.exports = {
       loader: 'ts-loader',
       exclude: /node_modules/
     }, {
-      test: /\.css$/,
-      loader: 'style-loader!typings-for-css-modules-loader?modules&namedExport&camelCase'
-    }, {
       test: /\.woff2$/,
       loader: 'url-loader?limit=65535'
     }]

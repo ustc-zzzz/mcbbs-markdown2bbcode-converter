@@ -1,12 +1,13 @@
 import * as React from 'react'
 
 import * as Index from '../index'
-import * as Style from '../index.css'
+import * as Hooks from '../hooks'
 
 import * as Core from '@material-ui/core'
 import * as Icons from '@material-ui/icons'
 
 import * as PopupState from 'material-ui-popup-state/hooks'
+import { useTheme } from '@material-ui/core'
 
 interface ConfigProps {
   images: {
@@ -27,6 +28,10 @@ function Config(props: ConfigProps) {
 
   const collectRendererConfig = () => props.configCollector()['renderer']
 
+  const { pre } = Hooks.useRootStyles()
+
+  const theme = useTheme()
+
   const generateRenderConfigList = () => {
     const result = []
     const rendererConfig = collectRendererConfig()
@@ -35,7 +40,7 @@ function Config(props: ConfigProps) {
       result.push(
         <div key={key} style={{ margin: '2em 0' }}>
           <h3 style={{ fontWeight: 500 }}>{key}</h3>
-          <pre>{prefix + '`' + suffix + '`'}</pre>
+          <pre className={pre}>{prefix + '`' + suffix + '`'}</pre>
         </div>
       )
     }
@@ -48,7 +53,7 @@ function Config(props: ConfigProps) {
 
   return (
     <div style={{ display: 'inline-block' }}>
-      <Core.IconButton color='inherit' style={{marginRight: '-12px'}} {...PopupState.bindTrigger(popupState)}>
+      <Core.IconButton color='inherit' style={{ marginRight: -theme.spacing(1.5) }} {...PopupState.bindTrigger(popupState)}>
         <Icons.MoreVert />
       </Core.IconButton>
       <ConfigMenu
@@ -130,10 +135,8 @@ interface ConfigMenuProps {
 }
 
 function ConfigMenu(props: ConfigMenuProps) {
-  const clipboardButtonClass = `${Style.headerCopyOutput} ${Style.showInMenu}`
   return (
     <Core.Menu {...PopupState.bindMenu(props.popupState)}>
-      <Core.MenuItem className={clipboardButtonClass}>Copy Output to Clipboard</Core.MenuItem>
       <Core.MenuItem onClick={props.onRenderConfigClick}>Render Configuration</Core.MenuItem>
       <Core.MenuItem onClick={props.onAboutClick}>About Project</Core.MenuItem>
     </Core.Menu>

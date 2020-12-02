@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import * as Style from '../index.css'
+import * as Hooks from '../hooks'
 
 import * as Core from '@material-ui/core'
 
@@ -28,18 +28,24 @@ function Main(props: MainProps) {
     localStorage.markdownInput = text
   }
 
+  const isSmall = !Core.useMediaQuery('@media (min-width: 768px)')
+
+  const { main } = Hooks.useRootStyles()
+
+  const { mainContainer, mainContainerSmall, mainLeft, mainRight, mainPaper } = Hooks.useMainStyles()
+
   return (
-    <main>
-      <div className={Style.mainContainer}>
+    <main className={main}>
+      <div className={isSmall ? mainContainerSmall : mainContainer}>
         <Core.Paper
-          className={Style.mainLeft}
+          className={`${mainLeft} ${mainPaper}`}
           elevation={state.leftDepth}
           onMouseOut={() => setState({ ...state, leftDepth: 1 })}
           onMouseOver={() => setState({ ...state, leftDepth: 2 })}>
           <InputArea inputId='markdown-input' defaultValue={state.input} onChange={handleChange} />
         </Core.Paper>
         <Core.Paper
-          className={Style.mainRight}
+          className={`${mainRight} ${mainPaper}`}
           elevation={state.rightDepth}
           onMouseOut={() => setState({ ...state, rightDepth: 1 })}
           onMouseOver={() => setState({ ...state, rightDepth: 2 })}>
@@ -57,12 +63,13 @@ interface InputAreaProps {
 }
 
 function InputArea(props: InputAreaProps) {
+  const theme = Core.useTheme()
+  const style = { display: 'block', lineHeight: theme.typography.body1.lineHeight, margin: 0, padding: 0, minHeight: '100%' }
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (props.onChange) {
       props.onChange(event.target.value)
     }
   }
-
   return (
     <Core.InputBase
       autoFocus={true}
@@ -72,7 +79,7 @@ function InputArea(props: InputAreaProps) {
       onChange={handleChange}
       value={props.defaultValue}
       placeholder='Markdown Input'
-      style={{ display: 'block', lineHeight: '24px', margin: 0, padding: 0, minHeight: '100%' }} />
+      style={style} />
   )
 }
 
@@ -81,7 +88,8 @@ interface OutputAreaProps {
 }
 
 function OutputArea(props: OutputAreaProps) {
-  const commonStyle = { lineHeight: '24px', margin: 0, padding: 0, minHeight: '100%' }
+  const theme = Core.useTheme()
+  const commonStyle = { lineHeight: theme.typography.body1.lineHeight, margin: 0, padding: 0, minHeight: '100%' }
   if (props.value) {
     const style: React.CSSProperties = { ...commonStyle, whiteSpace: 'pre' }
     return <Core.Typography variant='body1'><p style={style}>{props.value}</p></Core.Typography>

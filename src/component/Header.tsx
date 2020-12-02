@@ -1,11 +1,10 @@
 import * as React from 'react'
 
 import * as Index from '../index'
-import * as Style from '../index.css'
+import * as Hooks from '../hooks'
 
 import * as Core from '@material-ui/core'
-
-import Clipboard from 'clipboard'
+import * as Icons from '@material-ui/icons'
 
 import Config from './Config'
 
@@ -20,38 +19,44 @@ interface HeaderProps {
 }
 
 function Header(props: HeaderProps) {
-  const [state, setState] = React.useState({
-    openClipboardSuccess: false
-  })
-
-  React.useEffect(() => {
-    const options = { text: () => props.configCollector()['text'] }
-    const clipboard = new Clipboard(`.${Style.headerCopyOutput}`, options)
-
-    clipboard.on('success', () => setState({ openClipboardSuccess: true }))
-
-    return () => clipboard.destroy()
-  })
-
-  const clipboardButtonClass = `${Style.headerCopyOutput} ${Style.showInAppBar}`
-
+  const { title, toolbar } = Hooks.useHeaderStyles()
   return (
     <Core.AppBar position='fixed'>
-      <Core.Toolbar style={{ minHeight: '64px', paddingLeft: '24px' }}>
-        <Core.Typography variant='h5' style={{ flexGrow: 1 }}>
-          <span>MM2BC</span>
-          <div className={Style.titleSuffixSmall}>MCBBS Markdown To BBCode Converter</div>
-          <span className={Style.titleSuffixBig}>&nbsp;-&nbsp;MCBBS Markdown To BBCode Converter</span>
+      <Core.Toolbar className={toolbar}>
+        <Core.Typography variant='h5' className={title}>
+          <span>MM2BC</span><TitleSuffix />
         </Core.Typography>
-        <Core.Button color='inherit' className={clipboardButtonClass}>Copy Output</Core.Button>
-        <Core.Snackbar
-          autoHideDuration={4096}
-          open={state.openClipboardSuccess}
-          message={'BBCode output successfully copied'}
-          onClose={() => setState({ openClipboardSuccess: false })} />
+        <CopyOutput text={() => props.configCollector()['text']} />
         <Config images={props.images} configCollector={props.configCollector} />
       </Core.Toolbar>
     </Core.AppBar>
+  )
+}
+
+function TitleSuffix(props: {}) {
+  const isSmall = !Core.useMediaQuery('@media (min-width: 768px)')
+  const { titleSuffixSmall } = Hooks.useHeaderStyles()
+  return isSmall ? (
+    <div className={titleSuffixSmall}>MCBBS Markdown To BBCode Converter</div>
+  ) : (
+    <span>&nbsp;-&nbsp;MCBBS Markdown To BBCode Converter</span>
+  )
+}
+
+function CopyOutput(props: { text: () => string }) {
+  const [open, reset] = Hooks.useClipboard(`#mm2bc-copy-output`, props.text)
+  const isSmall = !Core.useMediaQuery('@media (min-width: 1024px)')
+  const clipboardMessage = 'BBCode output successfully copied'
+  return isSmall ? (
+    <div>
+      <Core.IconButton color='inherit' id='mm2bc-copy-output'><Icons.FileCopy /></Core.IconButton>
+      <Core.Snackbar open={open} autoHideDuration={4096} message={clipboardMessage} onClose={reset} />
+    </div>
+  ) : (
+    <div>
+      <Core.Button color='inherit' id='mm2bc-copy-output'><Icons.FileCopy />&nbsp;Copy Output</Core.Button>
+      <Core.Snackbar open={open} autoHideDuration={4096} message={clipboardMessage} onClose={reset} />
+    </div>
   )
 }
 
