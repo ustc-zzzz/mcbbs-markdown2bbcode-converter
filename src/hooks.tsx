@@ -31,7 +31,7 @@ export const useRootStyles = Core.makeStyles(theme => ({
 
 export const useHeaderStyles = Core.makeStyles(theme => ({
   titleSuffixSmall: {
-    fontSize: theme.typography.overline.fontSize,
+    fontSize: '0.625rem',
     whiteSpace: 'nowrap',
     paddingLeft: 1,
     flexGrow: 1
