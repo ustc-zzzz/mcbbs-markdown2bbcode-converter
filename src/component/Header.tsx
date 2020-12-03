@@ -22,13 +22,15 @@ function Header(props: HeaderProps) {
   const { title, toolbar } = Hooks.useHeaderStyles()
   return (
     <Core.AppBar position='fixed'>
-      <Core.Toolbar className={toolbar}>
-        <Core.Typography variant='h5' className={title}>
-          <span>MM2BC</span><TitleSuffix />
-        </Core.Typography>
-        <CopyOutput text={() => props.configCollector()['text']} />
-        <Config images={props.images} configCollector={props.configCollector} />
-      </Core.Toolbar>
+      <Core.StylesProvider injectFirst={true}>
+        <Core.Toolbar className={toolbar}>
+          <Core.Typography variant='h5' className={title}>
+            <span>MM2BC</span><TitleSuffix />
+          </Core.Typography>
+          <CopyOutput text={() => props.configCollector()['text']} />
+          <Config images={props.images} configCollector={props.configCollector} />
+        </Core.Toolbar>
+      </Core.StylesProvider>
     </Core.AppBar>
   )
 }
