@@ -1,9 +1,9 @@
-var Path = require('path')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
+const Path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.ts', '.tsx']
@@ -23,7 +23,10 @@ module.exports = {
       exclude: /node_modules/
     }, {
       test: /\.woff2$/,
-      loader: 'url-loader?limit=65535'
+      loader: 'url-loader',
+      options: {
+        limit: 65535
+      }
     }]
   },
   performance: {
@@ -33,6 +36,6 @@ module.exports = {
   plugins: [new CleanWebpackPlugin(), new HtmlWebpackPlugin({
     filename: 'index.html',
     template: 'src/index.html',
-    minify: {collapseWhitespace: true}
+    minify: { collapseWhitespace: true }
   })]
 }
