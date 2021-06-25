@@ -17,4 +17,4 @@ jobs:
       - uses: crazy-max/ghaction-github-pages@v2.5.0
         with:
           build_dir: build
-          domain: mm2bc.ustc-zzzz.net
+          fqdn: mm2bc.ustc-zzzz.net
